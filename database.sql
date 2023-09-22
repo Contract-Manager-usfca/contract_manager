@@ -32,6 +32,7 @@ VALUES
   ('Language'),
   ('Genre');
 
+# TODO FIX THESE SHITS
 CREATE TABLE contracts (
   id integer PRIMARY KEY,
   creator integer,
