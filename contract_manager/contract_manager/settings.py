@@ -79,8 +79,8 @@ DATABASES = { #Setting up to the MariaDB
         'NAME': 'user040', # The name of the database
         'USER': 'user040', #Current username
         'PASSWORD': 'user040', # Current PW -- will need to change
-        'HOST': 'sql.cs.usfca.edu',  # Hosted on stargate
-        'PORT': '3306',  # default MariaDB port, adjust if yours is different
+        'HOST': '127.0.0.1',  # Point to local end of the SSH tunnel
+        'PORT': '3307',  # The port used on our local end that tunnels to our MariaDB
     }
 }
 
