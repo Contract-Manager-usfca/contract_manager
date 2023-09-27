@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -76,9 +77,9 @@ WSGI_APPLICATION = 'contract_manager.wsgi.application'
 DATABASES = { #Setting up to the MariaDB
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'user040', # The name of the database
-        'USER': 'user040', #Current username
-        'PASSWORD': 'user040', # Current PW -- will need to change
+        'NAME': os.environ.get('DB_NAME'), # The name of the database
+        'USER': os.environ.get('DB_USER'), #Current username
+        'PASSWORD': os.environ.get('DB_PASSWORD'), # Current PW -- will need to change
         'HOST': '127.0.0.1',  # Point to local end of the SSH tunnel
         'PORT': '3307',  # The port used on our local end that tunnels to our MariaDB
     }

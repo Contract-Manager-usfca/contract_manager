@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command:  python /app/contract_manager/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment: # We are creating temporary enviorment variables here, we will use HASHICORP VAULT TO STORE OUR SECRETS SOON!
+      - DB_NAME=user040
+      - DB_USER=user040
+      - DB_PASSWORD=user040
