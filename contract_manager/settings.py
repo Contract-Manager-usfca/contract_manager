@@ -9,18 +9,22 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import sshtunnel
 
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+sshtunnel.SSH_TIMEOUT = 5.0
+sshtunnel.TUNNEL_TIMEOUT = 5.0
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-u(dj#^zp#das6wl#847!2)$301#rxgsgmoy6015%@4f&7sc12&'
+SECRET_KEY = 'django-insecure-b@muh$za!n%b#kmh0*com17-gd_1*a3(4-oi*%&1g7j5uwhh5#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'contract_manager_application',
 ]
 
 MIDDLEWARE = [
@@ -73,14 +78,29 @@ WSGI_APPLICATION = 'contract_manager.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = { #Setting up to the MariaDB
+SSH_TUNNEL = True  # Change to False when deploying without a tunnel
+
+
+if SSH_TUNNEL:
+    # Setup tunnel
+    tunnel = sshtunnel.SSHTunnelForwarder(
+        ('stargate.cs.usfca.edu', 22),
+        ssh_username='mchanson3',
+        ssh_password='20588492',  
+        remote_bind_address=('sql.cs.usfca.edu', 3306),
+    )
+
+    tunnel.start()
+
+
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'user040', # The name of the database
-        'USER': 'user040', #Current username
-        'PASSWORD': 'user040', # Current PW -- will need to change
-        'HOST': '127.0.0.1',  # Point to local end of the SSH tunnel
-        'PORT': '3307',  # The port used on our local end that tunnels to our MariaDB
+        'NAME': 'user040',
+        'USER': 'user040',
+        'PASSWORD': 'user040',
+        'HOST': 'host.docker.internal',
+        'PORT': '3307',
     }
 }
 
