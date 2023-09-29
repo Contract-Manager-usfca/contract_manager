@@ -1,14 +1,21 @@
-version: '3'
+version: '3.8'
 
 services:
   web:
     build: .
-    command:  python /app/contract_manager/manage.py runserver 0.0.0.0:8000
+    environment:
+      DJANGO_DEBUG: ${DJANGO_DEBUG}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
     ports:
       - "8000:8000"
-    environment: # We are creating temporary enviorment variables here, we will use HASHICORP VAULT TO STORE OUR SECRETS SOON!
-      - DB_NAME=user040
-      - DB_USER=user040
-      - DB_PASSWORD=user040
+
+volumes:
+  db_data:
