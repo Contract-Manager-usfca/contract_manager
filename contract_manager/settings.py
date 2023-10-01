@@ -102,10 +102,25 @@ DATABASES = {
         'NAME': 'user040',
         'USER': 'user040',
         'PASSWORD': 'user040',
-        'HOST': 'localhost',
+        'HOST': 'host.docker.internal', #localhost without docker container #host.docker.internal on docker
         'PORT': '3307',
     }
 }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+}
+
 
 
 # Password validation

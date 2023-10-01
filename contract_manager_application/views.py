@@ -3,9 +3,25 @@ from rest_framework import viewsets
 from .models import Creator, Platform, Demographic, Partner, Contract, CreatorPlatform, CreatorDemographic
 from .serializers import CreatorSerializer, PlatformSerializer, DemographicSerializer, PartnerSerializer, ContractSerializer, CreatorPlatformSerializer, CreatorDemographicSerializer
 
+
+
+import logging
+logger = logging.getLogger(__name__)
+
 class CreatorViewSet(viewsets.ModelViewSet):
     queryset = Creator.objects.all()
     serializer_class = CreatorSerializer
+
+    def list(self, request, *args, **kwargs):
+        logger.debug("Fetching all creator objects")
+        creators = Creator.objects.all()
+        logger.debug(f"Found {creators.count()} creator objects")
+        return super().list(request, *args, **kwargs)
+
+
+# class CreatorViewSet(viewsets.ModelViewSet):
+#     queryset = Creator.objects.all()
+#     serializer_class = CreatorSerializer
 
 class PlatformViewSet(viewsets.ModelViewSet):
     queryset = Platform.objects.all()
