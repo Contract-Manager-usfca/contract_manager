@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'rest_framework',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'contract_manager_application',
@@ -88,6 +89,7 @@ if SSH_TUNNEL:
         ('stargate.cs.usfca.edu', 22),
         ssh_username='mchanson3',
         ssh_password='20588492',  
+        ssh_pkey="../ssh_keys/id_rsa",
         remote_bind_address=('sql.cs.usfca.edu', 3306),
     )
 
@@ -100,7 +102,7 @@ DATABASES = {
         'NAME': 'user040',
         'USER': 'user040',
         'PASSWORD': 'user040',
-        'HOST': 'host.docker.internal',
+        'HOST': 'localhost',
         'PORT': '3307',
     }
 }
