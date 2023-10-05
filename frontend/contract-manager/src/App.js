@@ -2,6 +2,7 @@ import { useState } from "react";
 import './App.css';
 import Home from './components/Home';
 import LineChart from "./components/LineChart";
+import Footer from "./components/Footer";
 import { UserData } from "./Data";
 
 function App() {
@@ -28,7 +29,8 @@ function App() {
       color: "white",
       backgroundColor: "white",
       padding: "10px",
-      margin: "auto"
+      justifyContent: "center",
+      display: "flex",
     },
     card: {
       margin: '20px 200px',
@@ -59,14 +61,7 @@ function App() {
       <div style={styles.chart}>
         <LineChart chartData={userData} />
       </div>
-      <div style={styles.exFooter}>
-        <div style={styles.footer}>
-          <a href="#" style={{ textDecoration: 'none', marginRight: '20px' }}>Home</a>
-          <a href="#" style={{ textDecoration: 'none', marginRight: '20px' }}>About Us</a>
-          <a href="#" style={{ textDecoration: 'none', marginRight: '20px' }}>Help</a>
-          <a href="#" style={{ textDecoration: 'none', marginRight: '20px' }}>Contact Us</a>
-        </div>
-      </div>
+      <Footer/>
     </div>
   );
 }
