@@ -16,6 +16,7 @@ class CreatorViewSet(viewsets.ModelViewSet):
         logger.debug("Fetching all creator objects")
         creators = Creator.objects.all()
         logger.debug(f"Found {creators.count()} creator objects")
+        logger.debug(f"Connecting to database: {self.queryset.db}")
         return super().list(request, *args, **kwargs)
 
 
