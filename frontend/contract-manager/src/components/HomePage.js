@@ -82,7 +82,7 @@ function HomePage() {
       border: 'none',
       borderRadius: '4px',
       cursor: 'pointer',
-      backgroundColor: 'white',
+      backgroundColor: '#CBE1AE',
     },
   };
 
