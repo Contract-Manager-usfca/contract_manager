@@ -40,7 +40,7 @@ export default function Navbar() {
         <Nav>
           <NavDropdown className="dropdown bg-light bg-large" title="☰" id="basic-nav-dropdown" align="end" style={{ fontSize: '20px' }}>
           <NavDropdown.Item className="nav-item" style={{ color: 'black' }} href="/">Home</NavDropdown.Item>
-            <NavDropdown.Item className="nav-item" style={{ color: 'black' }} href="/">Profile</NavDropdown.Item>
+            {/* <NavDropdown.Item className="nav-item" style={{ color: 'black' }} href="/">Profile</NavDropdown.Item> */}
             <NavDropdown.Item className="nav-item" style={{ color: 'black' }} href="/SignIn">Sign In</NavDropdown.Item>
             <NavDropdown.Item className="nav-item" style={{ color: 'black' }} href="/Register">Create Account</NavDropdown.Item>
             {/* {Auth.loggedIn() ? (
