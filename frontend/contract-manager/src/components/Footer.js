@@ -1,29 +1,47 @@
 import React from 'react';
 
 const styles = {
-    footer: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: '10px 70px',
-      backgroundColor: '#C188FB',
-      color: '#210043',
-      margin: '20px 90px',
-      marginTop: '0px',
+    container: {
+        backgroundColor: '#210043',
+        padding: '20px 0',
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 10,
     },
-    exFooter: {
-      backgroundColor: 'black',
-    }
-  };
+    footer: {
+        maxWidth: '1200px',
+        width: '100%',
+        margin: '0 auto',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '10 20px',
+        backgroundColor: 'white',
+    },
+    link: {
+        color: '#C188FB',
+        textDecoration: 'none',
+        marginLeft: '20px',
+        padding: '5px 10px',
+        backgroundColor: 'white',
+        transition: 'background-color 0.3s ease, color 0.3s ease',
+        '&:hover': {
+            backgroundColor: '#C188FB',
+            color: '#210043',
+        }
+    },
+};
 
 export default function Footer() {
     return (
-        <div style={styles.exFooter}>
+        <div style={styles.container}>
             <div style={styles.footer}>
-                <a href="#" style={{ textDecoration: 'none', marginRight: '20px' }}>Home</a>
-                <a href="#" style={{ textDecoration: 'none', marginRight: '20px' }}>About Us</a>
-                <a href="#" style={{ textDecoration: 'none', marginRight: '20px' }}>Help</a>
-                <a href="#" style={{ textDecoration: 'none', marginRight: '20px' }}>Contact Us</a>
+                <a href="#" style={styles.link}>Home</a>
+                <a href="#" style={styles.link}>About Us</a>
+                <a href="#" style={styles.link}>Help</a>
+                <a href="#" style={styles.link}>Contact Us</a>
             </div>
         </div>
     );
