@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function DataFetcher() {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(null);
+    const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         // Define the API endpoint
-        const apiURL = 'https://api.example.com/data';
+        const apiURL = 'http://your-django-backend-url/api/get_items/';
 
         // Use Axios to fetch data from the API
         axios.get(apiURL)
             .then(response => {
-                setData(response.data);
+                setItems(response.data);
                 setLoading(false);
             })
             .catch(err => {
@@ -28,9 +28,9 @@ function DataFetcher() {
 
     return (
         <div>
-            <h2>Data from API:</h2>
+            <h2>Item List:</h2>
             <ul>
-                {data.map(item => (
+                {items.map(item => (
                     <li key={item.id}>{item.name}</li>
                 ))}
             </ul>
