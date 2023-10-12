@@ -13,7 +13,7 @@ To start the backend, run the following command:
 
 `docker-compose up`
 
-This command initializes our application by pulling relevant Docker images and starting the required services defined in our `docker-compose.yml` file.
+If the `Dockerfile` has been changed or this is the first time you are starting the Docker container then use the command `docker-compose up --build`. This command initializes our application by pulling relevant Docker images and starting the required services defined in our `docker-compose.yml` file.
 
 ## docker-compose.yml
 Our `docker-compose.yml` file is the heart of our backend setup. It defines the services, containers, and configurations required to run the application. Here's an overview:
