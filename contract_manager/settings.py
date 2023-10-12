@@ -29,7 +29,9 @@ SECRET_KEY = 'django-insecure-b@muh$za!n%b#kmh0*com17-gd_1*a3(4-oi*%&1g7j5uwhh5#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0", "localhost", "127.0.0.1"]
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'host.docker.internal', 0.0.0.0]
+
 
 
 # Application definition
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'rest_framework',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'contract_manager_application',
@@ -87,6 +90,7 @@ if SSH_TUNNEL:
         ('stargate.cs.usfca.edu', 22),
         ssh_username='mchanson3',
         ssh_password='20588492',  
+        ssh_pkey="../ssh_keys/id_rsa",
         remote_bind_address=('sql.cs.usfca.edu', 3306),
     )
 
@@ -99,10 +103,32 @@ DATABASES = {
         'NAME': 'user040',
         'USER': 'user040',
         'PASSWORD': 'user040',
-        'HOST': '0.0.0.0', ##Global localhost
+        'HOST': 'host.docker.internal', #localhost without docker container #host.docker.internal on docker
         'PORT': '3307',
     }
 }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        },
+        'myapp': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        },
+    },
+}
+
+
 
 
 # Password validation
