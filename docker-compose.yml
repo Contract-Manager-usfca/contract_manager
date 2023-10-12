@@ -13,7 +13,6 @@ services:
       DB_PORT: ${DB_PORT}
     command: sh -c "ssh -N -L 3307:sql.cs.usfca.edu:3306 mchanson3@stargate.cs.usfca.edu & python manage.py runserver 0.0.0.0:8000"
 
-
     volumes:
       - .:/app
     ports:

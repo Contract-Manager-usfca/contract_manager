@@ -29,9 +29,7 @@ SECRET_KEY = 'django-insecure-b@muh$za!n%b#kmh0*com17-gd_1*a3(4-oi*%&1g7j5uwhh5#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'host.docker.internal', 0.0.0.0]
-
+ALLOWED_HOSTS = ["0.0.0.0", "localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -75,39 +73,6 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'contract_manager.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-SSH_TUNNEL = True  # Change to False when deploying without a tunnel
-
-
-if SSH_TUNNEL:
-    # Setup tunnel
-    tunnel = sshtunnel.SSHTunnelForwarder(
-        ('stargate.cs.usfca.edu', 22),
-        ssh_username='mchanson3',
-        ssh_password='20588492',  
-        ssh_pkey="../ssh_keys/id_rsa",
-        remote_bind_address=('sql.cs.usfca.edu', 3306),
-    )
-
-    tunnel.start()
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'user040',
-        'USER': 'user040',
-        'PASSWORD': 'user040',
-        'HOST': 'host.docker.internal', #localhost without docker container #host.docker.internal on docker
-        'PORT': '3307',
-    }
-}
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -128,7 +93,37 @@ LOGGING = {
     },
 }
 
+WSGI_APPLICATION = 'contract_manager.wsgi.application'
 
+
+# Database
+# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+
+SSH_TUNNEL = True  # Change to False when deploying without a tunnel
+
+
+if SSH_TUNNEL:
+    # Setup tunnel
+    tunnel = sshtunnel.SSHTunnelForwarder(
+        ('stargate.cs.usfca.edu', 22),
+        ssh_username='mchanson3',
+        ssh_password='20588492',  
+        remote_bind_address=('sql.cs.usfca.edu', 3306),
+    )
+
+    tunnel.start()
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'user040',
+        'USER': 'user040',
+        'PASSWORD': 'user040',
+        'HOST': '0.0.0.0', ##Global localhost
+        'PORT': '3307',
+    }
+}
 
 
 # Password validation

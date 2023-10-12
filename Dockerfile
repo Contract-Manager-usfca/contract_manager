@@ -12,10 +12,10 @@ RUN apt-get update && apt-get install -y openssh-client dnsutils default-mysql-c
 WORKDIR /app
 
 # Copy SSH key and set correct permissions
-COPY ssh_keys/docker_key /root/.ssh/id_rsa
+COPY ssh_keys/dock_key /root/.ssh/id_rsa
 RUN chmod 600 /root/.ssh/id_rsa
 
-COPY ssh_keys/docker_key.pub /root/.ssh/id_rsa.pub
+COPY ssh_keys/dock_key.pub /root/.ssh/id_rsa.pub
 RUN chmod 600 /root/.ssh/id_rsa.pub
 
 # Add the remote host to the known hosts file
