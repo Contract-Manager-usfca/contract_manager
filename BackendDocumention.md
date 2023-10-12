@@ -6,7 +6,7 @@ This documentation provides an overview of our backend system, explaining the pr
 Before you begin, ensure you have the following prerequisites:
 
 Docker and Docker Compose installed on your system.
-Necessary environment variables and configurations set (e.g., DJANGO_DEBUG, DJANGO_SECRET_KEY, DB_USER, etc.).
+Necessary environment variables and configurations set (e.g., `DJANGO_DEBUG`, `DJANGO_SECRET_KEY`, `DB_USER`, etc.).
 
 ## Running the Backend
 To start the backend, run the following command:
@@ -32,7 +32,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
-    command: sh -c "ssh -N -L 3307:sql.cs.usfca.edu:3306 mchanson3@stargate.cs.usfca.edu & python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "ssh -N -L 3307:sql.cs.usfca.edu:3306 user@stargate.cs.usfca.edu & python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
     ports:
@@ -48,6 +48,54 @@ volumes:
 * `volumes`: Mounts the host directory `.` to `/app` in the container.
 * `ports`: Maps the host port 8000 to the container port 8000.
 
+## Dockerfile
+
+Our Dockerfile is essential for building the Docker image for our backend. It specifies the base image and sets up the environment. Here's an overview:
+
+```
+# Use the specified base image
+FROM python:3.10
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Install SSH client, dnsutils, and other utilities including the default MySQL client
+RUN apt-get update && apt-get install -y openssh-client dnsutils default-mysql-client && rm -rf /var/lib/apt/lists/*
+
+# Create and set working directory
+WORKDIR /app
+
+# Copy SSH key and set correct permissions
+COPY ssh_keys/dock_key /root/.ssh/id_rsa
+RUN chmod 600 /root/.ssh/id_rsa
+
+COPY ssh_keys/dock_key.pub /root/.ssh/id_rsa.pub
+RUN chmod 600 /root/.ssh/id_rsa.pub
+
+# Add the remote host to the known hosts file
+RUN ssh-keyscan stargate.cs.usfca.edu >> /root/.ssh/known_hosts
+
+# Install Python dependencies
+COPY requirements.txt /app/
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+# Copy project files to container
+COPY . /app/
+
+# Entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT bash /entrypoint.sh
+```
+* The `FROM` line specifies the base Python image.
+* Environment variables and necessary utilities are set up using `ENV`.
+* SSH key and known hosts are configured for secure SSH connections. Using `COPY`, SSH keys are copied from the local machine to the Docker container.
+* Python dependencies are installed, and project files are copied into the container.
+* The `entrypoint.sh` script is configured as the entry point.
+
+
 ## Entrypoint Script
 The `command` section in the `docker-compose.yml` file specifies how the backend is started. The `entrypoint.sh` script is crucial for initializing our backend container. It looks like this:
 
@@ -56,7 +104,7 @@ The `command` section in the `docker-compose.yml` file specifies how the backend
 set -e
 
 # Start SSH tunnel
-ssh -v -N -f -o ExitOnForwardFailure=yes -L 3307:sql.cs.usfca.edu:3306 mchanson3@stargate.cs.usfca.edu
+ssh -v -N -f -o ExitOnForwardFailure=yes -L 3307:sql.cs.usfca.edu:3306 user@stargate.cs.usfca.edu
 
 # Start Django app
 python manage.py runserver 0.0.0.0:8000
