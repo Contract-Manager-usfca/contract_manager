@@ -1,14 +1,14 @@
-import { useState } from "react";
+import React from "react";
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Homepage from './components/HomePage';
-import NavBar from './components/Navbar'
-import Footer from './components/Footer'
+import NavBar from './components/Navbar';
+import Footer from './components/Footer';
 import SignIn from "./components/SignIn";
 import Register from "./components/Register";
+import CreatorList from "./components/CreatorList";
 
 function App() {
-
   return (
     <div>
       <Router>
@@ -27,6 +27,11 @@ function App() {
               path="/Register"
               element={<Register />}
             />
+            {/* Add a new route for the CreatorList component */}
+            <Route
+              path="/CreatorList"
+              element={<CreatorList />}
+            />
           </Routes>
           <Footer />
         </div>
@@ -36,4 +41,3 @@ function App() {
 }
 
 export default App;
-
