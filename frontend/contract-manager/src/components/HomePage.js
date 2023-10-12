@@ -1,9 +1,11 @@
 import { useState } from "react";
 import LineChart from "./LineChart";
 import { UserData } from "../Data";
+import axios from 'axios';
 
 function HomePage() {
-  const [userData, setUserData] = useState({
+  // graph tings
+  const [userData, setUserData, users, setUsers] = useState({
     labels: UserData.map((data) => data.year),
     datasets: [
       {
@@ -22,6 +24,18 @@ function HomePage() {
       },
     ],
   });
+
+  const fetchAllUsers = () => {
+    // should be url to connect to back --> currently wrong
+    axios.get('http://localhost:8000/api/users/')
+      .then(response => {
+        setUsers(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching users:", error);
+      });
+  };
+
 
   const styles = {
     card: {
@@ -92,7 +106,7 @@ function HomePage() {
         <h2 style={styles.cardTitle}>General Statistics</h2>
         <div style={styles.searchBar}>
           <input type="text" style={styles.searchInput} placeholder="Search..." />
-          <button style={styles.searchBtn}>Search</button>
+          <button onClick={fetchAllUsers} style={styles.searchBtn}>Search</button>
         </div>
       </div>
       <div style={styles.chartContainer}>
@@ -117,6 +131,17 @@ function HomePage() {
           </p>
         </div>
       </div>
+      {/* User Data Display Section */}
+      {users && users.length > 0 && (
+        <div>
+          <h2>Users:</h2>
+          <ul>
+            {users.map(user => (
+              <li key={user.id}>{user.name}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
