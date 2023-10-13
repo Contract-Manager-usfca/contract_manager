@@ -27,7 +27,11 @@ function HomePage() {
 
   const fetchAllUsers = () => {
     // should be url to connect to back --> currently wrong
+<<<<<<< HEAD
     axios.get('http://localhost:8000/creators/')
+=======
+    axios.get('http://localhost:8000/api/users/')
+>>>>>>> f20664151c2ce6054eefad18c0451bb9ff857272
       .then(response => {
         setUsers(response.data);
       })
