@@ -5,7 +5,7 @@ import axios from 'axios';
 
 function HomePage() {
   // graph tings
-  const [userData, setUserData, users, setUsers] = useState({
+  const [userData, setUserData] = useState({
     labels: UserData.map((data) => data.year),
     datasets: [
       {
@@ -25,11 +25,14 @@ function HomePage() {
     ],
   });
 
+  const [users, setUsers] = useState([]);
+
   const fetchAllUsers = () => {
     // should be url to connect to back --> currently wrong
-    axios.get('http://localhost:8000/creators/')
+    axios.get('http://localhost:8000/creators/', { withCredentials: true })
       .then(response => {
         setUsers(response.data);
+        console.log(response.data);
       })
       .catch(error => {
         console.error("Error fetching users:", error);
