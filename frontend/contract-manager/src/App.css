@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&family=Handlee&family=Inria+Serif:wght@300&family=Koulen&family=Roboto:wght@100&display=swap');
 .App {
   text-align: center;
 }
@@ -37,6 +38,10 @@
   }
 }
 
-body {
-  background-color: #282c34;
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Koulen', sans-serif;
+}
+
+p {
+  font-family: 'Inria Serif', serif;
 }
