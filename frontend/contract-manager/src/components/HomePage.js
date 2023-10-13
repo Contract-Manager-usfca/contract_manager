@@ -50,6 +50,7 @@ function HomePage() {
     },
     cardTitle: {
       color: 'white',
+      paddingRight: '10%',
     },
     chart: {
       width: '100%',
@@ -67,7 +68,7 @@ function HomePage() {
     },
     chartTitle: {
       color: 'white',
-      marginRight: '20px',
+      marginRight: '25px',
       marginBottom: '20px',
       padding: '2% 20% 0% 6%',
     },
@@ -106,11 +107,26 @@ function HomePage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#252525', paddingBottom: '100px' }}>
       <div style={styles.card}>
-        <h2 style={styles.cardTitle}>General Statistics</h2>
+        <h2 style={styles.cardTitle}>Search Users</h2>
         <div style={styles.searchBar}>
           <input type="text" style={styles.searchInput} placeholder="Search..." />
           <button onClick={fetchAllUsers} style={styles.searchBtn}>Search</button>
         </div>
+      </div>
+      <div style={{ color: 'white', alignContent: 'center', margin: 'auto'}}>
+        {/* User Data Display Section */}
+        {users && users.length > 0 && (
+          <div style={styles.userDataContainer}>
+            <h2>Users:</h2>
+            <ul>
+              {users.map(user => (
+                <li key={user.id} style={styles.userListItem}>
+                  {user.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
       <div style={styles.chartContainer}>
         <div>
@@ -134,17 +150,6 @@ function HomePage() {
           </p>
         </div>
       </div>
-      {/* User Data Display Section */}
-      {users && users.length > 0 && (
-        <div>
-          <h2>Users:</h2>
-          <ul>
-            {users.map(user => (
-              <li key={user.id}>{user.name}</li>
-            ))}
-          </ul>
-        </div>
-      )}
     </div>
   );
 }
