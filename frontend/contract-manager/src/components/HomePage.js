@@ -114,7 +114,8 @@ function HomePage() {
         </div>
       </div>
       <div style={{ color: 'white', alignContent: 'center', margin: 'auto'}}>
-        {/* User Data Display Section */}
+        {/* User Data Display */}
+        {/* Map through users and grab their id and name*/}
         {users && users.length > 0 && (
           <div style={styles.userDataContainer}>
             <h2>Users:</h2>

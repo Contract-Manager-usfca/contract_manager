@@ -6,7 +6,6 @@ import NavBar from './components/Navbar';
 import Footer from './components/Footer';
 import SignIn from "./components/SignIn";
 import Register from "./components/Register";
-import CreatorList from "./components/CreatorList";
 
 function App() {
   return (
@@ -26,11 +25,6 @@ function App() {
             <Route
               path="/Register"
               element={<Register />}
-            />
-            {/* Add a new route for the CreatorList component */}
-            <Route
-              path="/CreatorList"
-              element={<CreatorList />}
             />
           </Routes>
           <Footer />
