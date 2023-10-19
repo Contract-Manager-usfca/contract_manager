@@ -28,8 +28,8 @@ function HomePage() {
   const [users, setUsers] = useState([]);
 
   const fetchAllUsers = () => {
-    // should be url to connect to back --> currently wrong
-    axios.get('http://localhost:8000/creators/', { withCredentials: true })
+    // should be url to connect to back
+    axios.get('http://chupacabra.cs.usfca.edu:8000/creators/', { withCredentials: true })
       .then(response => {
         setUsers(response.data);
         console.log(response.data);
