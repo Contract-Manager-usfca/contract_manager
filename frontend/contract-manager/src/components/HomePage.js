@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LineChart from "./LineChart";
 import { UserData } from "../Data";
 import axios from 'axios';
@@ -25,20 +25,39 @@ function HomePage() {
     ],
   });
 
-  const [users, setUsers] = useState([]);
+  const [allDemographics, setAllDemographics] = useState([]);
+  const [selectedDemographics, setSelectedDemographics] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredDemographics, setFilteredDemographics] = useState([]);
 
-  const fetchAllUsers = () => {
-    // should be url to connect to back --> currently wrong
-    axios.get('http://localhost:8000/creators/', { withCredentials: true })
+  // Fetch and set all available demographics from your database
+  useEffect(() => {
+    axios.get('http://chupacabra.cs.usfca.edu:8000/demographics/', { withCredentials: true })
       .then(response => {
-        setUsers(response.data);
-        console.log(response.data);
+        const demographicsArray = response.data.map(demographic => demographic.demographic);
+        setAllDemographics(demographicsArray);
       })
       .catch(error => {
-        console.error("Error fetching users:", error);
+        console.error("Error fetching demographics:", error);
+      });
+  }, []);
+
+  const fetchDemographic = () => {
+    axios.get('http://chupacabra.cs.usfca.edu:8000/demographics/', { withCredentials: true })
+      .then(response => {
+        const filteredData = response.data.filter(demographic => {
+          return demographic.demographic.toLowerCase().includes(searchQuery.toLowerCase());
+        });
+        setFilteredDemographics(filteredData);
+      })
+      .catch(error => {
+        console.error("Error fetching demographics:", error);
       });
   };
 
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
   const styles = {
     card: {
@@ -107,22 +126,34 @@ function HomePage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#252525', paddingBottom: '100px' }}>
       <div style={styles.card}>
-        <h2 style={styles.cardTitle}>Search Users</h2>
+        <h2 style={styles.cardTitle}>Search Demographic</h2>
         <div style={styles.searchBar}>
-          <input type="text" style={styles.searchInput} placeholder="Search..." />
-          <button onClick={fetchAllUsers} style={styles.searchBtn}>Search</button>
+          <input
+            type="text"
+            style={styles.searchInput}
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={handleSearchInputChange}
+            list="demographics-list" // Reference the datalist element
+          />
+          <button onClick={fetchDemographic} style={styles.searchBtn}>Search</button>
         </div>
+        {/* Create the datalist with all available demographics */}
+        <datalist id="demographics-list">
+          {allDemographics.map((option, index) => (
+            <option key={index} value={option} />
+          ))}
+        </datalist>
       </div>
-      <div style={{ color: 'white', alignContent: 'center', margin: 'auto'}}>
-        {/* User Data Display */}
+      <div style={{ color: 'white', alignContent: 'center', margin: 'auto' }}>
+        {/* Demographic Data Display */}
         {/* Map through users and grab their id and name*/}
-        {users && users.length > 0 && (
+        {filteredDemographics && filteredDemographics.length > 0 && (
           <div style={styles.userDataContainer}>
-            <h2>Users:</h2>
             <ul>
-              {users.map(user => (
-                <li key={user.id} style={styles.userListItem}>
-                  {user.name}
+              {filteredDemographics.map(demographic => (
+                <li key={demographic.id} style={styles.userListItem}>
+                  {demographic.demographic}
                 </li>
               ))}
             </ul>
