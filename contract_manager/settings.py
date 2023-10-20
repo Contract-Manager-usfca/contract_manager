@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'contract_manager_application',
+    'letsencrypt',
     'corsheaders',
 ]
 
