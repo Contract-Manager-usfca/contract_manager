@@ -53,7 +53,7 @@ function HomePage() {
         if (filteredData.length > 0) {
           const demographicName = filteredData[0].demographic;
           selectDemographic(demographicName);
-          setSearchQuery(""); // Optionally clear the search input after adding the chip
+          setSearchQuery(""); // clear the search input after adding the chip
         } else {
           console.warn("Demographic not found!"); // or display some UI warning to the user
         }
@@ -86,8 +86,6 @@ function HomePage() {
       </div>
     );
   }
-
-
 
   const styles = {
     card: {
