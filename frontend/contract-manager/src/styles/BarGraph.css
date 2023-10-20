@@ -13,3 +13,12 @@ svg {
  g {
     color: white;
 }
+
+.line {
+    stroke-width: 2px;
+}
+
+.circle:hover {
+    stroke: #333;
+    stroke-width: 1px;
+}

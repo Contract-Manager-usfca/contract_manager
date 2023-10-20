@@ -12,9 +12,12 @@ const BarGraph = ({ selectedDemographics }) => {
   //   { name: "D", value: 70 },
   // ]);
 
+  // CURRENTLY THE DATA THE GRAPH IS PRODUCING DOESN'T MAKE SENSE
+  // need to grab data, group users, add them within their groups, and display
+
   useEffect(() => {
-    const margin = { top: 20, right: 20, bottom: 30, left: 40 };
-    const width = 960 - margin.left - margin.right;
+    const margin = { top: 20, right: 20, bottom: 30, left: 100 };
+    const width = 800 - margin.left - margin.right;
     const height = 500 - margin.top - margin.bottom;
 
     const x = d3.scaleBand().range([0, width]).padding(0.1);

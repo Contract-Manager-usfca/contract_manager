@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import BarGraph from "./BarGraph";
+import LollipopPlot from "./LollipopPlot";
 import axios from 'axios';
 
 function HomePage() {
@@ -25,20 +26,30 @@ function HomePage() {
         const filteredData = response.data.filter(demographic => {
           return demographic.demographic.toLowerCase().includes(searchQuery.toLowerCase());
         });
-
-        // If the filteredData contains results, add the first match as a chip
+  
+        // Check If the filteredData contains results
         if (filteredData.length > 0) {
           const demographicName = filteredData[0].demographic;
-          selectDemographic(demographicName);
-          setSearchQuery(""); // clear the search input after adding the chip
+           // Check if the demographic is already selected
+          if (selectedDemographics.includes(demographicName)) {
+            // Notify the user
+            console.warn(`${demographicName} has already been selected!`);
+            // Optionally, you can use an alert or other methods to notify the user
+            alert(`${demographicName} has already been selected!`);
+          } else {
+            selectDemographic(demographicName);
+            setSearchQuery("");
+          }
         } else {
-          console.warn("Demographic not found!"); // or display some UI warning to the user
+          // if demographic doesn't exist yet
+          alert("Demographic not found!");
         }
       })
       .catch(error => {
         console.error("Error fetching demographics:", error);
       });
   };
+  
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -56,9 +67,9 @@ function HomePage() {
 
   function Chip({ label, onRemove }) {
     return (
-      <div style={{ display: 'inline-flex', padding: '5px 10px', border: '1px solid #CBE1AE', borderRadius: '20px', marginRight: '10px', backgroundColor: '#303030' }}>
+      <div style={{ display: 'inline-flex', padding: '5px 10px', border: '1px solid #9487E4', borderRadius: '20px', marginRight: '10px', backgroundColor: '#303030' }}>
         <span>{label}</span>
-        <button onClick={onRemove} style={{ marginLeft: '5px', cursor: 'pointer', background: 'none', border: 'none', color: '#CBE1AE' }}>x</button>
+        <button onClick={onRemove} style={{ margin: 'auto', cursor: 'pointer', background: 'none', border: 'none', color: '#9487E4' }}>x</button>
       </div>
     );
   }
@@ -77,7 +88,7 @@ function HomePage() {
     },
     chartContainer: {
       display: 'flex',
-      justifyContent: 'space-between',
+      justifyContent: 'center',
       alignItems: 'center',
       width: '70%',
       margin: '10px 250px 20px',
@@ -144,7 +155,7 @@ function HomePage() {
           ))}
         </datalist>
       </div>
-      <div style={{ color: 'white', alignContent: 'center', margin: 'auto' }}>
+      <div style={{ color: 'white', alignContent: 'center', margin: 'auto', marginBottom: '4px' }}>
         {selectedDemographics.map(demo => (
           <Chip key={demo} label={demo} onRemove={() => deselectDemographic(demo)} />
         ))}
@@ -170,10 +181,19 @@ function HomePage() {
 
       <div style={styles.chartContainer}>
         <div style={styles.barGraph}>
-          <h2 style={styles.chartTitle}>D3 Bar Graph Test</h2>
-          {/* <BarGraph /> */}
+          <h2 style={styles.chartTitle}>First D3 Graph</h2>
+          <LollipopPlot selectedDemographics={selectedDemographics} />
           <p style={styles.chartText}>
-            These are the results from Chart 2. Demographic, blah blah, gets some percentage more followers than the other demographics. blah blah blah more explanation about this graph.
+            This is a <b>Lollipop Plot Graph</b> generated with your selected Demographics.
+            <br /><br />
+            {selectedDemographics.length > 0 ? (
+              <span>
+                The Demographics currently selected are:{" "}
+                <strong>{selectedDemographics.join(", ")}</strong>
+              </span>
+            ) : (
+             <b>Make a Selection above to see the generated results</b>
+            )}
           </p>
         </div>
       </div>
