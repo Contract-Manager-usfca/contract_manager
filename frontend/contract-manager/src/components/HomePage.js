@@ -93,7 +93,7 @@ function HomePage() {
     chartText: {
       color: 'white',
       maxWidth: '100%',
-      fontSize: '15px',
+      fontSize: '17px',
       marginTop: '20px',
       textAlign: 'center',
     },
@@ -154,10 +154,20 @@ function HomePage() {
           <h2 style={styles.chartTitle}>First D3 Graph</h2>
           <BarGraph selectedDemographics={selectedDemographics} />
           <p style={styles.chartText}>
-            These are the results from Chart 2. Demographic, blah blah, gets some percentage more followers than the other demographics. blah blah blah more explanation about this graph.
+            This is a <b>Bar Graph</b> generated with your selected Demographics.
+            <br /><br />
+            {selectedDemographics.length > 0 ? (
+              <span>
+                The Demographics currently selected are:{" "}
+                <strong>{selectedDemographics.join(", ")}</strong>
+              </span>
+            ) : (
+             <b>Make a Selection above to see the generated results</b>
+            )}
           </p>
         </div>
       </div>
+
       <div style={styles.chartContainer}>
         <div style={styles.barGraph}>
           <h2 style={styles.chartTitle}>D3 Bar Graph Test</h2>
