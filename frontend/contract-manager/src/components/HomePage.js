@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
 import LineChart from "./LineChart";
+import BarGraph from "./BarGraph";
 import { UserData } from "../Data";
 import axios from 'axios';
+import * as d3 from "d3";
 
 function HomePage() {
-  // graph tings
+  //GRAPH TINGS
+  // data for D3 test graph
+
+  // Below is ChartJS
   const [userData, setUserData] = useState({
     labels: UserData.map((data) => data.year),
     datasets: [
@@ -61,7 +66,7 @@ function HomePage() {
       .catch(error => {
         console.error("Error fetching demographics:", error);
       });
-};
+  };
 
 
   const handleSearchInputChange = (event) => {
@@ -101,6 +106,10 @@ function HomePage() {
     },
     chart: {
       width: '100%',
+      height: 'auto',
+    },
+    barGraph: {
+      width: '50%',
       height: 'auto',
     },
     chartContainer: {
@@ -149,6 +158,7 @@ function HomePage() {
       cursor: 'pointer',
       backgroundColor: '#CBE1AE',
     },
+
   };
 
   return (
@@ -174,9 +184,9 @@ function HomePage() {
         </datalist>
       </div>
       <div style={{ color: 'white', alignContent: 'center', margin: 'auto' }}>
-          {selectedDemographics.map(demo => (
-            <Chip key={demo} label={demo} onRemove={() => deselectDemographic(demo)} />
-          ))}
+        {selectedDemographics.map(demo => (
+          <Chip key={demo} label={demo} onRemove={() => deselectDemographic(demo)} />
+        ))}
       </div>
       <div style={styles.chartContainer}>
         <div>
@@ -190,15 +200,15 @@ function HomePage() {
         </div>
       </div>
       <div style={styles.chartContainer}>
-        <div style={styles.chart}>
-          <LineChart chartData={userData} />
+        <div style={styles.barGraph}>
+          <BarGraph />
         </div>
-        <div>
-          <h2 style={styles.chartTitle}>CHART 2</h2>
+        {/* <div>
+          <h2 style={styles.chartTitle}>D3 Bar Graph Test</h2>
           <p style={styles.chartText}>
             These are the results from Chart 2. Demographic, blah blah, gets some percentage more followers than the other demographics. blah blah blah more explanation about this graph.
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
