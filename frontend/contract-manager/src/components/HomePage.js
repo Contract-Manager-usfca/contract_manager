@@ -48,16 +48,46 @@ function HomePage() {
         const filteredData = response.data.filter(demographic => {
           return demographic.demographic.toLowerCase().includes(searchQuery.toLowerCase());
         });
-        setFilteredDemographics(filteredData);
+
+        // If the filteredData contains results, add the first match as a chip
+        if (filteredData.length > 0) {
+          const demographicName = filteredData[0].demographic;
+          selectDemographic(demographicName);
+          setSearchQuery(""); // Optionally clear the search input after adding the chip
+        } else {
+          console.warn("Demographic not found!"); // or display some UI warning to the user
+        }
       })
       .catch(error => {
         console.error("Error fetching demographics:", error);
       });
-  };
+};
+
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
+
+  const selectDemographic = (demographic) => {
+    if (!selectedDemographics.includes(demographic)) {
+      setSelectedDemographics(prev => [...prev, demographic]);
+    }
+  };
+
+  const deselectDemographic = (demographic) => {
+    setSelectedDemographics(prev => prev.filter(item => item !== demographic));
+  };
+
+  function Chip({ label, onRemove }) {
+    return (
+      <div style={{ display: 'inline-flex', padding: '5px 10px', border: '1px solid #CBE1AE', borderRadius: '20px', marginRight: '10px', backgroundColor: '#303030' }}>
+        <span>{label}</span>
+        <button onClick={onRemove} style={{ marginLeft: '5px', cursor: 'pointer', background: 'none', border: 'none', color: '#CBE1AE' }}>x</button>
+      </div>
+    );
+  }
+
+
 
   const styles = {
     card: {
@@ -146,19 +176,9 @@ function HomePage() {
         </datalist>
       </div>
       <div style={{ color: 'white', alignContent: 'center', margin: 'auto' }}>
-        {/* Demographic Data Display */}
-        {/* Map through users and grab their id and name*/}
-        {filteredDemographics && filteredDemographics.length > 0 && (
-          <div style={styles.userDataContainer}>
-            <ul>
-              {filteredDemographics.map(demographic => (
-                <li key={demographic.id} style={styles.userListItem}>
-                  {demographic.demographic}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+          {selectedDemographics.map(demo => (
+            <Chip key={demo} label={demo} onRemove={() => deselectDemographic(demo)} />
+          ))}
       </div>
       <div style={styles.chartContainer}>
         <div>
