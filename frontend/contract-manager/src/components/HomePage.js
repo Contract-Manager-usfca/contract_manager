@@ -1,39 +1,11 @@
 import { useState, useEffect } from "react";
-import LineChart from "./LineChart";
 import BarGraph from "./BarGraph";
-import { UserData } from "../Data";
 import axios from 'axios';
-import * as d3 from "d3";
 
 function HomePage() {
-  //GRAPH TINGS
-  // data for D3 test graph
-
-  // Below is ChartJS
-  const [userData, setUserData] = useState({
-    labels: UserData.map((data) => data.year),
-    datasets: [
-      {
-        label: "Users Gained",
-        data: UserData.map((data) => data.userGain),
-        backgroundColor: [
-          "#03045E",
-          "#003049",
-          "#94D2BD",
-          "#FdF0D5",
-          "#C1121F",
-        ],
-        borderColor: [
-          "#FFFBEE"
-        ]
-      },
-    ],
-  });
-
   const [allDemographics, setAllDemographics] = useState([]);
   const [selectedDemographics, setSelectedDemographics] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredDemographics, setFilteredDemographics] = useState([]);
 
   // Fetch and set all available demographics from your database
   useEffect(() => {
@@ -67,7 +39,6 @@ function HomePage() {
         console.error("Error fetching demographics:", error);
       });
   };
-
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -104,14 +75,6 @@ function HomePage() {
       color: 'white',
       paddingRight: '10%',
     },
-    chart: {
-      width: '100%',
-      height: 'auto',
-    },
-    barGraph: {
-      width: '50%',
-      height: 'auto',
-    },
     chartContainer: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -120,27 +83,26 @@ function HomePage() {
       margin: '10px 250px 20px',
       background: '#202020',
       padding: '20px',
-      border: 'solid #CBE1AE 1px'
+      border: 'solid #CBE1AE 1px',
     },
     chartTitle: {
       color: 'white',
-      marginRight: '25px',
       marginBottom: '20px',
-      padding: '2% 20% 0% 6%',
+      textAlign: 'center',
     },
     chartText: {
       color: 'white',
-      marginRight: '20px',
-      maxWidth: '70%',
-      fontSize: '0.9rem',
-      padding: '2% 0% 6% 6%',
+      maxWidth: '100%',
+      fontSize: '15px',
+      marginTop: '20px',
+      textAlign: 'center',
     },
     searchBar: {
       display: 'flex',
       gap: '10px',
       backgroundColor: 'white',
       padding: '.5%',
-      width: '500px'
+      width: '500px',
     },
     searchInput: {
       padding: '5px',
@@ -148,7 +110,7 @@ function HomePage() {
       border: '1px solid #ccc',
       borderRadius: '4px',
       flexGrow: 1,
-      textColor: '#CBE1AE'
+      textColor: '#CBE1AE',
     },
     searchBtn: {
       padding: '5px 15px',
@@ -158,7 +120,6 @@ function HomePage() {
       cursor: 'pointer',
       backgroundColor: '#CBE1AE',
     },
-
   };
 
   return (
@@ -172,7 +133,7 @@ function HomePage() {
             placeholder="Search..."
             value={searchQuery}
             onChange={handleSearchInputChange}
-            list="demographics-list" // Reference the datalist element
+            list="demographics-list"
           />
           <button onClick={fetchDemographic} style={styles.searchBtn}>Search</button>
         </div>
@@ -189,26 +150,22 @@ function HomePage() {
         ))}
       </div>
       <div style={styles.chartContainer}>
-        <div>
-          <h2 style={styles.chartTitle}>CHART 1</h2>
+        <div style={styles.barGraph}>
+          <h2 style={styles.chartTitle}>First D3 Graph</h2>
+          <BarGraph selectedDemographics={selectedDemographics} />
           <p style={styles.chartText}>
-            These are the results from Chart 1. Demographic, blah blah, gets some percentage more followers than the other demographics. blah blah blah more explanation about this graph.
+            These are the results from Chart 2. Demographic, blah blah, gets some percentage more followers than the other demographics. blah blah blah more explanation about this graph.
           </p>
-        </div>
-        <div style={styles.chart}>
-          <LineChart chartData={userData} />
         </div>
       </div>
       <div style={styles.chartContainer}>
         <div style={styles.barGraph}>
-          <BarGraph />
-        </div>
-        {/* <div>
           <h2 style={styles.chartTitle}>D3 Bar Graph Test</h2>
+          {/* <BarGraph /> */}
           <p style={styles.chartText}>
             These are the results from Chart 2. Demographic, blah blah, gets some percentage more followers than the other demographics. blah blah blah more explanation about this graph.
           </p>
-        </div> */}
+        </div>
       </div>
     </div>
   );

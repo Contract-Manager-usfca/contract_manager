@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import * as d3 from "d3";
 import '../styles/BarGraph.css';
 
-const BarGraph = () => {
-  const [data, setData] = useState([
-    { name: "A", value: 50 },
-    { name: "B", value: 20 },
-    { name: "C", value: 40 },
-    { name: "D", value: 70 },
-  ]);
+const BarGraph = ({ selectedDemographics }) => { 
+
+  // TEST DATA 
+  // const [data, setData] = useState([
+  //   { name: "A", value: 50 },
+  //   { name: "B", value: 20 },
+  //   { name: "C", value: 40 },
+  //   { name: "D", value: 70 },
+  // ]);
 
   useEffect(() => {
     const margin = { top: 20, right: 20, bottom: 30, left: 40 };
@@ -21,6 +23,13 @@ const BarGraph = () => {
     const svgContainer = d3.select(".bar-chart");
     svgContainer.selectAll("*").remove();
 
+    // Update the data whenever selectedDemographics changes
+    //CURRENTLY USING DEMOGRAPHICS BUT ALSO A RANDOM NUMBER 
+    const updatedData = selectedDemographics.map(demo => ({ name: demo, value: Math.random() * 100 }));
+
+    x.domain(updatedData.map(d => d.name));
+    y.domain([0, d3.max(updatedData, d => d.value)]);
+
     const svg = svgContainer
       .append("svg")
       .attr("width", width + margin.left + margin.right)
@@ -28,20 +37,20 @@ const BarGraph = () => {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    x.domain(data.map(d => d.name));
-    y.domain([0, d3.max(data, d => d.value)]);
+    x.domain(updatedData.map(d => d.name));
+    y.domain([0, d3.max(updatedData, d => d.value)]);
 
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x));
 
     const colorScale = d3.scaleOrdinal()
-      .domain(data.map(d => d.name))
+      .domain(updatedData.map(d => d.name))
       .range(["#c8e6c9", "#a5d6a7", "#81c784", "#66bb6a"]);
 
     const bars = svg
       .selectAll(".bar")
-      .data(data)
+      .data(updatedData)
       .enter()
       .append("rect")
       .attr("class", "bar")
@@ -53,7 +62,7 @@ const BarGraph = () => {
 
     const labels = svg
       .selectAll(".bar-label")
-      .data(data)
+      .data(updatedData)
       .enter()
       .append("text")
       .attr("class", "bar-label")
@@ -89,9 +98,10 @@ const BarGraph = () => {
     });
 
     svg.append("g").call(d3.axisLeft(y));
-  }, [data]);
+  }, [selectedDemographics]);
 
   return <div className="bar-chart"></div>;
 };
 
 export default BarGraph;
+
