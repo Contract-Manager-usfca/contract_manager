@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import ScrollMagic from "scrollmagic";
+// import "scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap";
+// import { gsap } from 'gsap';
 import BarGraph from "./BarGraph";
 import LollipopPlot from "./LollipopPlot";
 import axios from 'axios';
@@ -18,6 +21,24 @@ function HomePage() {
       .catch(error => {
         console.error("Error fetching demographics:", error);
       });
+    // Create a new ScrollMagic Controller
+    const controller = new ScrollMagic.Controller();
+
+    // Create a scene to trigger animations for the first graph
+    new ScrollMagic.Scene({
+      triggerElement: ".first-graph-trigger", // Replace with the appropriate trigger element
+      triggerHook: 0.8, // Adjust the trigger hook as needed
+    })
+      .setClassToggle(".first-graph-trigger", "animated") // Toggle a CSS class on the trigger element
+      .addTo(controller);
+
+    // Create a scene to trigger animations for the second graph
+    new ScrollMagic.Scene({
+      triggerElement: ".second-graph-trigger", // Replace with the appropriate trigger element
+      triggerHook: 0.8, // Adjust the trigger hook as needed
+    })
+      .setClassToggle(".second-graph-trigger", "animated") // Toggle a CSS class on the trigger element
+      .addTo(controller);
   }, []);
 
   const fetchDemographic = () => {
@@ -173,7 +194,7 @@ function HomePage() {
             <br /><br />
             {selectedDemographics.length > 0 ? (
               <span>
-                The Demographics currently selected are:&nbsp;  
+                The Demographics currently selected are:&nbsp;
                 <span style={styles.boldTextColor}>{selectedDemographics.join(", ")}</span>
               </span>
             ) : (
@@ -184,21 +205,23 @@ function HomePage() {
       </div>
 
       <div style={styles.chartContainer}>
-        <div style={styles.barGraph}>
-          <h2 style={styles.chartTitle}>First D3 Graph</h2>
-          <LollipopPlot selectedDemographics={selectedDemographics} />
-          <p style={styles.chartText}>
-            This is a <span style={styles.boldTextColor}>Lollipop Plot Graph</span> generated with your selected Demographics.
-            <br /><br />
-            {selectedDemographics.length > 0 ? (
-              <span>
-                The Demographics currently selected are:&nbsp;  
-                <span style={styles.boldTextColor}>{selectedDemographics.join(", ")}</span>
-              </span>
-            ) : (
-              <span style={styles.boldTextColor}>Make a Selection above to see the generated results</span>
-            )}
-          </p>
+        <div className="first-graph-trigger">
+          <div style={styles.barGraph}>
+            <h2 style={styles.chartTitle}>Second D3 Graph</h2>
+            <LollipopPlot selectedDemographics={selectedDemographics} />
+            <p style={styles.chartText}>
+              This is a <span style={styles.boldTextColor}>Lollipop Plot Graph</span> generated with your selected Demographics.
+              <br /><br />
+              {selectedDemographics.length > 0 ? (
+                <span>
+                  The Demographics currently selected are:&nbsp;
+                  <span style={styles.boldTextColor}>{selectedDemographics.join(", ")}</span>
+                </span>
+              ) : (
+                <span style={styles.boldTextColor}>Make a Selection above to see the generated results</span>
+              )}
+            </p>
+          </div>
         </div>
       </div>
     </div>
