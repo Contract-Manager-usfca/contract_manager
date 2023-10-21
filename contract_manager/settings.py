@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-b@muh$za!n%b#kmh0*com17-gd_1*a3(4-oi*%&1g7j5uwhh5#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["0.0.0.0", "localhost", "127.0.0.1", "contract-manager.aquaflare.io", "chupacabra.cs.usfca.edu"]
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'contract_manager_application',
+    'letsencrypt',
     'corsheaders',
 ]
 
