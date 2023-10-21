@@ -26,11 +26,11 @@ function HomePage() {
         const filteredData = response.data.filter(demographic => {
           return demographic.demographic.toLowerCase().includes(searchQuery.toLowerCase());
         });
-  
+
         // Check If the filteredData contains results
         if (filteredData.length > 0) {
           const demographicName = filteredData[0].demographic;
-           // Check if the demographic is already selected
+          // Check if the demographic is already selected
           if (selectedDemographics.includes(demographicName)) {
             // Notify the user
             console.warn(`${demographicName} has already been selected!`);
@@ -49,7 +49,7 @@ function HomePage() {
         console.error("Error fetching demographics:", error);
       });
   };
-  
+
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -131,6 +131,10 @@ function HomePage() {
       cursor: 'pointer',
       backgroundColor: '#CBE1AE',
     },
+    boldTextColor: {
+      color: '#C188FB',
+      fontWeight: 'bold'
+    },
   };
 
   return (
@@ -165,15 +169,15 @@ function HomePage() {
           <h2 style={styles.chartTitle}>First D3 Graph</h2>
           <BarGraph selectedDemographics={selectedDemographics} />
           <p style={styles.chartText}>
-            This is a <b>Bar Graph</b> generated with your selected Demographics.
+            This is a <span style={styles.boldTextColor}>Bar Graph</span> generated with your selected Demographics.
             <br /><br />
             {selectedDemographics.length > 0 ? (
               <span>
-                The Demographics currently selected are:{" "}
-                <strong>{selectedDemographics.join(", ")}</strong>
+                The Demographics currently selected are:&nbsp;  
+                <span style={styles.boldTextColor}>{selectedDemographics.join(", ")}</span>
               </span>
             ) : (
-             <b>Make a Selection above to see the generated results</b>
+              <span style={styles.boldTextColor}>Make a Selection above to see the generated results</span>
             )}
           </p>
         </div>
@@ -184,15 +188,15 @@ function HomePage() {
           <h2 style={styles.chartTitle}>First D3 Graph</h2>
           <LollipopPlot selectedDemographics={selectedDemographics} />
           <p style={styles.chartText}>
-            This is a <b>Lollipop Plot Graph</b> generated with your selected Demographics.
+            This is a <span style={styles.boldTextColor}>Lollipop Plot Graph</span> generated with your selected Demographics.
             <br /><br />
             {selectedDemographics.length > 0 ? (
               <span>
-                The Demographics currently selected are:{" "}
-                <strong>{selectedDemographics.join(", ")}</strong>
+                The Demographics currently selected are:&nbsp;  
+                <span style={styles.boldTextColor}>{selectedDemographics.join(", ")}</span>
               </span>
             ) : (
-             <b>Make a Selection above to see the generated results</b>
+              <span style={styles.boldTextColor}>Make a Selection above to see the generated results</span>
             )}
           </p>
         </div>

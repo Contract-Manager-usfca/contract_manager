@@ -18,6 +18,7 @@ const styles = {
     alignItems: 'center',
     padding: '0px 20px',
     backgroundColor: 'white',
+    borderBottom: 'solid 2px #111111',
     justifyContent: 'space-between',
     color: 'black',
   },
