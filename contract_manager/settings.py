@@ -175,3 +175,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH0_DOMAIN = 'dev-zhtbroabf061klmh.us.auth0.com'
+AUTH0_AUDIENCE = 'https://dev-zhtbroabf061klmh.us.auth0.com/api/v2/'
