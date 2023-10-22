@@ -2,11 +2,7 @@ import * as React from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import NavItem from "react-bootstrap/esm/NavItem";
-import Button from "react-bootstrap/esm/Button";
 import Auth from '../utils/auth';
-import SignIn from "./SignIn";
-import Register from "./Register";
 import { useAuth0 } from '@auth0/auth0-react';
 
 // Mock Auth object for demonstration
@@ -45,16 +41,17 @@ export default function Navbar() {
           <NavDropdown className="dropdown bg-light bg-large" title="☰" id="basic-nav-dropdown" align="end" style={{ fontSize: '20px' }}>
           <NavDropdown.Item className="nav-item" style={{ color: 'black' }} href="/">Home</NavDropdown.Item>
             {/* <NavDropdown.Item className="nav-item" style={{ color: 'black' }} href="/">Profile</NavDropdown.Item> */}
+             {/* If not already authenticated, generate a login button. Otherwise, logout. */}
              {!isAuthenticated ? (<NavDropdown.Item 
               className="nav_item" 
-              style = {{backgroundColor:'transparent',border: 'none',color:'black'}} 
+              style = {{color:'black'}} 
               onClick={() => loginWithRedirect({})}>
                     Log In/Sign Up
                 </NavDropdown.Item>
               ) : (<NavDropdown.Item 
               className="nav_item" 
-              style = {{backgroundColor:'transparent',border: 'none',color:'black'}} 
-              onClick={() => loginWithRedirect({})}>
+              style = {{color:'black'}} 
+              onClick={() => logout({})}>
                  Log Out
              </NavDropdown.Item>)}
             {/* {Auth.loggedIn() ? (

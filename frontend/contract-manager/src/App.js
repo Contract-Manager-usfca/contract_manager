@@ -4,8 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Homepage from './components/HomePage';
 import NavBar from './components/Navbar';
 import Footer from './components/Footer';
-import SignIn from "./components/SignIn";
-import Register from "./components/Register";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
@@ -19,12 +18,8 @@ function App() {
               element={<Homepage />}
             />
             <Route
-              path="/SignIn"
-              element={<SignIn />}
-            />
-            <Route
-              path="/Register"
-              element={<Register />}
+              path="/Dashboard"
+              element={<Dashboard />}
             />
           </Routes>
           <Footer />
