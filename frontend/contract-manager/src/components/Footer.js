@@ -38,10 +38,10 @@ export default function Footer() {
     return (
         <div style={styles.container}>
             <div style={styles.footer}>
-                <a href="#" style={styles.link}>Home</a>
-                <a href="#" style={styles.link}>About Us</a>
-                <a href="#" style={styles.link}>Help</a>
-                <a href="#" style={styles.link}>Contact Us</a>
+                <a href="/" style={styles.link}>Home</a>
+                <a href="/" style={styles.link}>About Us</a>
+                <a href="/" style={styles.link}>Help</a>
+                <a href="/" style={styles.link}>Contact Us</a>
             </div>
         </div>
     );

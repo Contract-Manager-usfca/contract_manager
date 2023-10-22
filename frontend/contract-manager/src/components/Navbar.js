@@ -1,8 +1,6 @@
 import * as React from "react";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import Auth from '../utils/auth';
 import { useAuth0 } from '@auth0/auth0-react';
 
 // Mock Auth object for demonstration
@@ -27,11 +25,6 @@ const styles = {
 
 export default function Navbar() {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
-  // Placeholder logout function
-  // const logout = () => {
-  //   console.log("Logging out");
-  //   // Implement logout logic here
-  // };
 
   return (
     <div style={styles.nav}>
@@ -40,7 +33,7 @@ export default function Navbar() {
         <Nav>
           <NavDropdown className="dropdown bg-light bg-large" title="☰" id="basic-nav-dropdown" align="end" style={{ fontSize: '20px' }}>
           <NavDropdown.Item className="nav-item" style={{ color: 'black' }} href="/">Home</NavDropdown.Item>
-            {/* <NavDropdown.Item className="nav-item" style={{ color: 'black' }} href="/">Profile</NavDropdown.Item> */}
+            {isAuthenticated && (<NavDropdown.Item className="nav-item" style={{ color: 'black' }} href="/Dashboard">Profile</NavDropdown.Item>)}
              {/* If not already authenticated, generate a login button. Otherwise, logout. */}
              {!isAuthenticated ? (<NavDropdown.Item 
               className="nav_item" 
