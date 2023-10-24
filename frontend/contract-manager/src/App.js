@@ -9,7 +9,7 @@ import Register from "./components/Register";
 
 function App() {
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Router>
         <div className="flex-column justify-center align-center min-100-vh bg-primary">
           <NavBar />
@@ -27,11 +27,11 @@ function App() {
               element={<Register />}
             />
           </Routes>
-          <Footer />
         </div>
+        <Footer />
       </Router>
     </div>
-  )
+  );
 }
 
 export default App;
