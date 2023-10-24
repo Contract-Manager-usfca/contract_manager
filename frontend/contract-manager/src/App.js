@@ -8,7 +8,7 @@ import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Router>
         <div className="flex-column justify-center align-center min-100-vh bg-primary">
           <NavBar />
@@ -22,11 +22,11 @@ function App() {
               element={<Dashboard />}
             />
           </Routes>
-          <Footer />
         </div>
+        <Footer />
       </Router>
     </div>
-  )
+  );
 }
 
 export default App;
