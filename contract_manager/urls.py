@@ -32,5 +32,5 @@ router.register(r'creator-demographics', CreatorDemographicViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
-    re_path(r'^\.well-known/', include('letsencrypt.urls')),
+    #re_path(r'^\.well-known/', include('letsencrypt.urls')), ##commented out for testing purposes .... do we even need this????
 ]
