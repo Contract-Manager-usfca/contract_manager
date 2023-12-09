@@ -15,8 +15,16 @@ In today's digital world, influencers are constantly seeking ways to ensure they
 
 ## How to Use
 
-*Coming Soon* - Detailed instructions on how to input your data, interpret the results, and make informed decisions about potential partnerships.
+[Documentation to our backend](https://github.com/Contract-Manager-usfca/contract_manager/edit/main/BackendDocumention.md)
 
 ---
+
+## Testing
+
+Below are the steps used to run basic pytest with coverage shown of the tests. You can add more tests if you would like, but be sure to keep the coverage high :)
+
+1. `pip install coverage`
+2. `coverage run --source='.' manage.py test`
+3. `coverage report`
 
 Stay ahead in the influencer game by ensuring you're not only well-compensated but also well-informed.
