@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import sshtunnel
+import sys
 
 from pathlib import Path
 
@@ -129,10 +130,18 @@ DATABASES = {
         'NAME': 'user040',
         'USER': 'user040',
         'PASSWORD': 'user040',
-        'HOST': '0.0.0.0', ##Global localhost
+        'HOST': 'localhost', ##Global localhost
         'PORT': '3307',
+    },
+    'test': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# Use a separate setting for testing
+if 'test' in sys.argv:
+    DATABASES['default'] = DATABASES['test']
 
 
 # Password validation
